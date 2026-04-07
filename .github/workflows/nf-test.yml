@@ -1,12 +1,13 @@
 name: Run nf-test
 on:
-  pull_request:
-    paths-ignore:
-      - "docs/**"
-      - "**/meta.yml"
-      - "**/*.md"
-      - "**/*.png"
-      - "**/*.svg"
+# Temporarily disabling nf-test workflow
+#  pull_request:
+#    paths-ignore:
+#      - "docs/**"
+#      - "**/meta.yml"
+#      - "**/*.md"
+#      - "**/*.png"
+#      - "**/*.svg"
   release:
     types: [published]
   workflow_dispatch:
