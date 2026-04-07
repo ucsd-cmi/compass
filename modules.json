@@ -76,6 +76,11 @@
                         "branch": "master",
                         "git_sha": "f9aa121d8b7f3b01d052ecac9175145592eb6041",
                         "installed_by": ["modules"]
+                    },
+                    "unzip": {
+                        "branch": "master",
+                        "git_sha": "4dd9d8439a429c7ee566e0e2347f76ddeef27e66",
+                        "installed_by": ["modules"]
                     }
                 }
             },

@@ -3,6 +3,7 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
+include { UNZIP                    } from '../modules/nf-core/unzip/main'
 include { FASTQC                   } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                  } from '../modules/nf-core/multiqc/main'
 include { SEQKIT_PAIR              } from '../modules/nf-core/seqkit/pair/main'
@@ -41,6 +42,23 @@ workflow COMPASS {
     ch_multiqc_files = channel.empty()
 
     //
+    // MODULE: Unzip reference databases
+    // NB: This is essentially only for the test profile, but could be useful later
+    //
+
+    ch_ref_databases_to_unzip = ch_ref_databases.branch { db_meta, db_path ->
+        unzip: db_path.name.endsWith(".zip")
+        skip: true
+    }
+    
+    UNZIP (
+        ch_ref_databases_to_unzip.unzip
+    )
+
+    ch_ref_databases_final = UNZIP.out.unzipped_archive
+        .mix(ch_ref_databases_to_unzip.skip)
+
+    //
     // MODULE: Run FastQC
     //
 
@@ -71,7 +89,7 @@ workflow COMPASS {
     if (params.do_host_removal) {
         HOSTREMOVAL (
             ch_trimmed_reads,
-            ch_ref_databases
+            ch_ref_databases_final
         )
         ch_multiqc_files = ch_multiqc_files.mix(HOSTREMOVAL.out.multiqc_output.collect{it[1]})
         ch_host_filtered_reads = HOSTREMOVAL.out.reads
@@ -124,7 +142,7 @@ workflow COMPASS {
 
     PROFILING (
         ch_merged_reads,
-        ch_ref_databases
+        ch_ref_databases_final
     )
     ch_multiqc_files = ch_multiqc_files.mix(PROFILING.out.multiqc_output.collect{it[1]})
 
