@@ -1,13 +1,12 @@
 name: Run nf-test
 on:
-# Temporarily disabling nf-test workflow
-#  pull_request:
-#    paths-ignore:
-#      - "docs/**"
-#      - "**/meta.yml"
-#      - "**/*.md"
-#      - "**/*.png"
-#      - "**/*.svg"
+  pull_request:
+    paths-ignore:
+      - "docs/**"
+      - "**/meta.yml"
+      - "**/*.md"
+      - "**/*.png"
+      - "**/*.svg"
   release:
     types: [published]
   workflow_dispatch:
@@ -29,7 +28,7 @@ jobs:
   nf-test-changes:
     name: nf-test-changes
     runs-on: # use GitHub runners
-      - "ubuntu-latest"
+      - "NextflowRunner"
     outputs:
       shard: ${{ steps.set-shards.outputs.shard }}
       total_shards: ${{ steps.set-shards.outputs.total_shards }}
@@ -62,7 +61,7 @@ jobs:
     needs: [nf-test-changes]
     if: ${{ needs.nf-test-changes.outputs.total_shards != '0' }}
     runs-on: # use GitHub runners
-      - "ubuntu-latest"
+      - "NextflowRunner"
     strategy:
       fail-fast: false
       matrix:
