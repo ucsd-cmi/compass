@@ -1,0 +1,338 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/ucsd-cmi/compass/master/nextflow_schema.json",
+    "title": "ucsd-cmi/compass pipeline parameters",
+    "description": "COMPASS - COmprehensive Metagenomics Platform for Automated Sequence Solutions",
+    "type": "object",
+    "$defs": {
+        "input_output_options": {
+            "title": "Input/output options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define where the pipeline should find input data and save output data.",
+            "required": ["input", "outdir", "ref_databases"],
+            "properties": {
+                "input": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "schema": "assets/schema_input.json",
+                    "mimetype": "text/csv",
+                    "pattern": "^\\S+\\.csv$",
+                    "description": "Path to comma-separated file containing information about the samples in the experiment.",
+                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row.",
+                    "fa_icon": "fas fa-file-csv"
+                },
+                "outdir": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "Email address for completion summary.",
+                    "fa_icon": "fas fa-envelope",
+                    "help_text": "Set this parameter to your e-mail address to get a summary e-mail with details of the run sent to you when the workflow exits. If set in your user config file (`~/.nextflow/config`) then you don't need to specify this on the command line for every run.",
+                    "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
+                },
+                "multiqc_title": {
+                    "type": "string",
+                    "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
+                    "fa_icon": "fas fa-file-signature"
+                },
+                "ref_databases": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "mimetype": "text/csv",
+                    "pattern": "^\\S+\\.csv$",
+                    "description": "Path to comma-separated file containing information about reference databases to use in the pipeline.",
+                    "fa_icon": "fas fa-file-csv"
+                },
+                "adapter_list": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to a list of adapters to use in sample pre-processing",
+                    "fa_icon": "fas fa-folder-open"
+                }
+            }
+        },
+        "preprocessing_options": {
+            "title": "Pre-processing options",
+            "type": "object",
+            "description": "Options related to sample pre-processing",
+            "properties": {
+                "do_preprocessing": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether to do sample pre-processing steps",
+                    "help_text": "It's generally recommended to do pre-processing unless you know it has already been performed using external tools.",
+                    "default": true
+                },
+                "preprocessing_min_read_length": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "Minimum length of reads to preserve and process",
+                    "help_text": "Changing the minimum read length will impact both profiling speed and accuracy.",
+                    "default": 15
+                }
+            }
+        },
+        "host_removal_options": {
+            "title": "Host removal options",
+            "type": "object",
+            "description": "Options related to host removal",
+            "properties": {
+                "do_host_removal": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether to do host removal steps",
+                    "help_text": "It's generally recommended to perform host removal if you're interested in microbial composition",
+                    "default": true
+                }
+            }
+        },
+        "read_pairing_options": {
+            "title": "Read pairing options",
+            "type": "object",
+            "description": "Options related to pairing reads",
+            "properties": {
+                "do_read_pairing": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether to ensure all reads in paired-end files are correctly paired",
+                    "help_text": "Setting this to true will drop singletons before proceeding with taxonomic profiling.",
+                    "default": true
+                }
+            }
+        },
+        "run_merging_options": {
+            "title": "Run merging options",
+            "type": "object",
+            "description": "Options related to run merging",
+            "properties": {
+                "do_run_merging": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Determines whether to merge samples with the sample sample_id",
+                    "help_text": "Optional step to merge samples prior to the profiling step.",
+                    "default": false
+                }
+            }
+        },
+        "profiling_options": {
+            "title": "Profiling options",
+            "type": "object",
+            "description": "Options related to taxonomic profiling",
+            "properties": {
+                "do_kraken2": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether to run Kraken2",
+                    "help_text": "Given that Kraken2 is currently the only profiler available, this should not be changed to false.",
+                    "default": true
+                },
+                "do_bracken": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether to run Bracken",
+                    "help_text": "Optional tool to estimate abundance of taxa within a sample. Requires Kraken2.",
+                    "default": true
+                }
+            }
+        },
+        "profiling_standardisation_options": {
+            "title": "Profiling standardisation options",
+            "type": "object",
+            "description": "Options related to taxonomic profile standardisation using Taxpasta",
+            "properties": {
+                "do_profiling_standardisation": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Determines whether to run Taxpasta",
+                    "help_text": "Optional tool to standardise output from various taxonomic profiling tools.",
+                    "default": false
+                },
+                "profiling_standardisation_format": {
+                    "type": "string",
+                    "fa_icon": "fas file-text-o",
+                    "description": "Output format from Taxpasta",
+                    "help_text": "Output format from Taxpasta",
+                    "enum": ["tsv", "csv", "ods", "xlsx", "arrow", "parquet", "biom"],
+                    "default": "tsv"
+                },
+                "taxpasta_taxonomy": {
+                    "type": "string",
+                    "fa_icon": "fas fa-folder-open",
+                    "description": "Path to directory containing taxdump files",
+                    "help_text": "For current pipeline usage, this should be the same path as the Kraken2 reference database",
+                    "default": "null"
+                },
+                "taxpasta_add_name": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Add taxon name to Taxpasta output",
+                    "help_text": "Add taxon name to Taxpasta output",
+                    "default": false
+                },
+                "taxpasta_add_rank": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Add taxon rank to Taxpasta output",
+                    "help_text": "Add taxon rank to Taxpasta output",
+                    "default": false
+                },
+                "taxpasta_add_lineage": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Add full taxon lineage to Taxpasta output - names",
+                    "help_text": "Taxon names separated by semicolons",
+                    "default": false
+                },
+                "taxpasta_add_id_lineage": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Add full taxon lineage to Taxpasta output - IDs",
+                    "help_text": "Taxon identifiers separated by semicolons",
+                    "default": false
+                },
+                "taxpasta_add_rank_lineage": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Add full taxon rank lineage to Taxpasta output",
+                    "help_text": "Taxon ranks separated by semicolons",
+                    "default": false
+                }
+            }
+        },
+        "generic_options": {
+            "title": "Generic options",
+            "type": "object",
+            "fa_icon": "fas fa-file-import",
+            "description": "Less common options for the pipeline, typically set in a config file.",
+            "help_text": "These options are common to all nf-core pipelines and allow you to customise some of the core preferences for how the pipeline runs.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
+            "properties": {
+                "version": {
+                    "type": "boolean",
+                    "description": "Display version and exit.",
+                    "fa_icon": "fas fa-question-circle",
+                    "hidden": true
+                },
+                "publish_dir_mode": {
+                    "type": "string",
+                    "default": "copy",
+                    "description": "Method used to save pipeline results to output directory.",
+                    "help_text": "The Nextflow `publishDir` option specifies which intermediate files should be saved to the output directory. This option tells the pipeline what method should be used to move these files. See [Nextflow docs](https://www.nextflow.io/docs/latest/process.html#publishdir) for details.",
+                    "fa_icon": "fas fa-copy",
+                    "enum": ["symlink", "rellink", "link", "copy", "copyNoFollow", "move"],
+                    "hidden": true
+                },
+                "email_on_fail": {
+                    "type": "string",
+                    "description": "Email address for completion summary, only when pipeline fails.",
+                    "fa_icon": "fas fa-exclamation-triangle",
+                    "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$",
+                    "help_text": "An email address to send a summary email to when the pipeline is completed - ONLY sent if the pipeline does not exit successfully.",
+                    "hidden": true
+                },
+                "plaintext_email": {
+                    "type": "boolean",
+                    "description": "Send plain-text email instead of HTML.",
+                    "fa_icon": "fas fa-remove-format",
+                    "hidden": true
+                },
+                "max_multiqc_email_size": {
+                    "type": "string",
+                    "description": "File size limit when attaching MultiQC reports to summary emails.",
+                    "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
+                    "default": "25.MB",
+                    "fa_icon": "fas fa-file-upload",
+                    "hidden": true
+                },
+                "monochrome_logs": {
+                    "type": "boolean",
+                    "description": "Do not use coloured log outputs.",
+                    "fa_icon": "fas fa-palette",
+                    "hidden": true
+                },
+                "multiqc_config": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Custom config file to supply to MultiQC.",
+                    "fa_icon": "fas fa-cog",
+                    "hidden": true
+                },
+                "multiqc_logo": {
+                    "type": "string",
+                    "description": "Custom logo file to supply to MultiQC. File name must also be set in the MultiQC config file",
+                    "fa_icon": "fas fa-image",
+                    "hidden": true
+                },
+                "multiqc_methods_description": {
+                    "type": "string",
+                    "description": "Custom MultiQC yaml file containing HTML including a methods description.",
+                    "fa_icon": "fas fa-cog"
+                },
+                "validate_params": {
+                    "type": "boolean",
+                    "description": "Boolean whether to validate parameters against the schema at runtime",
+                    "default": true,
+                    "fa_icon": "fas fa-check-square",
+                    "hidden": true
+                },
+                "pipelines_testdata_base_path": {
+                    "type": "string",
+                    "fa_icon": "far fa-check-circle",
+                    "description": "Base URL or local path to location of pipeline test dataset files",
+                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/",
+                    "hidden": true
+                },
+                "trace_report_suffix": {
+                    "type": "string",
+                    "fa_icon": "far calendar",
+                    "description": "Suffix to add to the trace report filename. Default is the date and time in the format yyyy-MM-dd_HH-mm-ss.",
+                    "hidden": true
+                },
+                "help": {
+                    "type": ["boolean", "string"],
+                    "description": "Display the help message."
+                },
+                "help_full": {
+                    "type": "boolean",
+                    "description": "Display the full detailed help message."
+                },
+                "show_hidden": {
+                    "type": "boolean",
+                    "description": "Display hidden parameters in the help message (only works when --help or --help_full are provided)."
+                }
+            }
+        }
+    },
+    "allOf": [
+        {
+            "$ref": "#/$defs/input_output_options"
+        },
+        {
+            "$ref": "#/$defs/preprocessing_options"
+        },
+        {
+            "$ref": "#/$defs/host_removal_options"
+        },
+        {
+            "$ref": "#/$defs/read_pairing_options"
+        },
+        {
+            "$ref": "#/$defs/run_merging_options"
+        },
+        {
+            "$ref": "#/$defs/profiling_options"
+        },
+        {
+            "$ref": "#/$defs/profiling_standardisation_options"
+        },
+        {
+            "$ref": "#/$defs/generic_options"
+        }
+    ]
+}

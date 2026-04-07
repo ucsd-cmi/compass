@@ -1,0 +1,69 @@
+repository_type: pipeline
+
+nf_core_version: 3.5.2
+
+lint:
+  files_unchanged:
+    - LICENSE
+    - .github/CONTRIBUTING.md
+    - .prettierignore
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-compass_logo_light.png
+    - docs/images/nf-core-compass_logo_light.png
+    - docs/images/nf-core-compass_logo_dark.png
+    - .github/ISSUE_TEMPLATE/bug_report.yml
+    - .github/CONTRIBUTING.md
+    - .github/PULL_REQUEST_TEMPLATE.md
+    - assets/email_template.txt
+    - docs/README.md
+    - .prettierignore
+  nextflow_config:
+    - manifest.name
+    - manifest.homePage
+    - process.cpus
+    - process.memory
+    - process.time
+    - custom_config
+    - params.custom_config_version
+    - params.custom_config_base
+  multiqc_config:
+    - report_comment
+  files_exist:
+    - LICENSE
+    - conf/igenomes.config
+    - conf/igenomes_ignored.config
+    - CHANGELOG.md
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-compass_logo_light.png
+    - docs/images/nf-core-compass_logo_light.png
+    - docs/images/nf-core-compass_logo_dark.png
+    - .github/ISSUE_TEMPLATE/config.yml
+    - .github/workflows/awstest.yml
+    - .github/workflows/awsfulltest.yml
+    - conf/igenomes.config
+  readme:
+    - nextflow_badge
+    - nfcore_template_badge
+  included_configs: false
+
+template:
+  org: ucsd-cmi
+  name: compass
+  description: COMPASS - COmprehensive Metagenomics Platform for Automated Sequence Solutions
+  author: Cassidy Symons
+  version: 0.1.0
+  force: true
+  outdir: .
+  skip_features:
+    - github_badges
+    - changelog
+    - license
+    - igenomes
+    - nf_core_configs
+    - seqera_platform
+    - gpu
+    - codespaces
+    - vscode
+    - adaptivecard
+    - slackreport
+  is_nfcore: false

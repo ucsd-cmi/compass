@@ -1,0 +1,42 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/ucsd-cmi/compass/master/assets/schema_database.json",
+    "title": "ucsd-cmi/compass pipeline - params.ref_database schema",
+    "description": "Schema for the file provided with params.ref_database",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "tool": {
+                "type": "string",
+                "enum": [
+                    "bowtie2",
+                    "bracken",
+                    "kraken2"
+                ],
+                "errorMessage": "Invalid tool name. Please see documentation for all supported tools. Currently these tools are included: bowtie2, bracken, kraken2.",
+                "meta": ["tool"]
+            },
+            "ref_db_name": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "The unique name of the database should be provided.",
+                "meta": ["ref_db_name"]
+            },
+            "ref_db_params": {
+                "type": "string",
+                "pattern": "^[^\"']*$",
+                "errorMessage": "Invalid database ref_db_params entry. No quotes allowed.",
+                "meta": ["ref_db_params"]
+            },
+            "ref_db_path": {
+                "type": "string",
+                "exists": true,
+                "format": "path",
+                "errorMessage": "ref_db_path should be either a file path or a directory."
+            }
+        },
+        "required": ["tool", "ref_db_name", "ref_db_path"]
+    },
+    "uniqueEntries": ["tool"]
+}
