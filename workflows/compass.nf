@@ -50,7 +50,7 @@ workflow COMPASS {
         unzip: db_path.name.endsWith(".zip")
         skip: true
     }
-    
+
     UNZIP (
         ch_ref_databases_to_unzip.unzip
     )
