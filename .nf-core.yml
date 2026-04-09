@@ -51,6 +51,7 @@ lint:
     - nextflow_badge
     - nfcore_template_badge
   included_configs: false
+  actions_nf_test: false
 
 template:
   org: ucsd-cmi
