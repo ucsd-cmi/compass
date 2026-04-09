@@ -1,0 +1,18 @@
+Changes in component 'nf-core/kraken2/kraken2'
+'modules/nf-core/kraken2/kraken2/environment.yml' is unchanged
+'modules/nf-core/kraken2/kraken2/meta.yml' is unchanged
+Changes in 'kraken2/kraken2/main.nf':
+--- modules/nf-core/kraken2/kraken2/main.nf
++++ modules/nf-core/kraken2/kraken2/main.nf
+@@ -1,6 +1,6 @@
+ process KRAKEN2_KRAKEN2 {
+     tag "$meta.id"
+-    label 'process_high'
++    label 'process_high_memory'
+ 
+     conda "${moduleDir}/environment.yml"
+     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+
+'modules/nf-core/kraken2/kraken2/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/kraken2/kraken2/tests/main.nf.test' is unchanged
+************************************************************

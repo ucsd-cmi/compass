@@ -34,7 +34,8 @@
                     "kraken2/kraken2": {
                         "branch": "master",
                         "git_sha": "71a39f3598935d64ffd65f0960e4d2d4a42ab778",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/kraken2/kraken2/kraken2-kraken2.diff"
                     },
                     "multiqc": {
                         "branch": "master",
@@ -44,7 +45,8 @@
                     "samtools/fastq": {
                         "branch": "master",
                         "git_sha": "156feda0cb6589cd29c04902004fa3b53bc00205",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/samtools/fastq/samtools-fastq.diff"
                     },
                     "samtools/index": {
                         "branch": "master",
@@ -54,12 +56,14 @@
                     "samtools/stats": {
                         "branch": "master",
                         "git_sha": "fe93fde0845f907fc91ad7cc7d797930408824df",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/samtools/stats/samtools-stats.diff"
                     },
                     "samtools/view": {
                         "branch": "master",
                         "git_sha": "d2ceed2ec5fccf922638f116a15e02f6458288fb",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/samtools/view/samtools-view.diff"
                     },
                     "seqkit/pair": {
                         "branch": "master",

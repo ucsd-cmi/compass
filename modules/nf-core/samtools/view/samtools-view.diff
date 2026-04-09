@@ -1,0 +1,19 @@
+Changes in component 'nf-core/samtools/view'
+'modules/nf-core/samtools/view/environment.yml' is unchanged
+'modules/nf-core/samtools/view/meta.yml' is unchanged
+Changes in 'samtools/view/main.nf':
+--- modules/nf-core/samtools/view/main.nf
++++ modules/nf-core/samtools/view/main.nf
+@@ -1,6 +1,6 @@
+ process SAMTOOLS_VIEW {
+     tag "$meta.id"
+-    label 'process_low'
++    label 'process_medium'
+ 
+     conda "${moduleDir}/environment.yml"
+     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+
+'modules/nf-core/samtools/view/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/samtools/view/tests/nextflow.config' is unchanged
+'modules/nf-core/samtools/view/tests/main.nf.test' is unchanged
+************************************************************

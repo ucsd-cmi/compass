@@ -1,0 +1,18 @@
+Changes in component 'nf-core/samtools/fastq'
+'modules/nf-core/samtools/fastq/environment.yml' is unchanged
+'modules/nf-core/samtools/fastq/meta.yml' is unchanged
+Changes in 'samtools/fastq/main.nf':
+--- modules/nf-core/samtools/fastq/main.nf
++++ modules/nf-core/samtools/fastq/main.nf
+@@ -1,6 +1,6 @@
+ process SAMTOOLS_FASTQ {
+     tag "${meta.id}"
+-    label 'process_low'
++    label 'process_medium'
+ 
+     conda "${moduleDir}/environment.yml"
+     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+
+'modules/nf-core/samtools/fastq/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/samtools/fastq/tests/main.nf.test' is unchanged
+************************************************************
