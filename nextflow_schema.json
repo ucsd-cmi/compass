@@ -84,7 +84,7 @@
                     "help_text": "Increasing this value will enact stricter quality filtering.",
                     "default": 15
                 },
-                "proprocessing_fastp_cut_tail": {
+                "preprocessing_fastp_cut_tail": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-off",
                     "description": "Determines whether to use fastp's --cut_tail parameter",
