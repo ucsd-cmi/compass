@@ -33,9 +33,9 @@ To run the pipeline, you must have:
 The samplesheet (samplesheet.csv) should be formatted as follows:
 ```
 sample_id,run_id,fastq_1,fastq_2
-SAMPLE1,RUN1,SAMPLE1_RUN1_R1.fastq.gz,SAMPLE1_RUN1_R2.fastq.gz
-SAMPLE2,RUN1,SAMPLE2_RUN1_R1.fastq.gz,SAMPLE2_RUN1_R2.fastq.gz
-SAMPLE1,RUN2,SAMPLE1_RUN2_R1.fastq.gz,SAMPLE1_RUN2_R2.fastq.gz
+SAMPLE1,RUN1,/path/to/SAMPLE1_RUN1_R1.fastq.gz,/path/to/SAMPLE1_RUN1_R2.fastq.gz
+SAMPLE2,RUN1,/path/to/SAMPLE2_RUN1_R1.fastq.gz,/path/to/SAMPLE2_RUN1_R2.fastq.gz
+SAMPLE1,RUN2,/path/to/SAMPLE1_RUN2_R1.fastq.gz,/path/to/SAMPLE1_RUN2_R2.fastq.gz
 ```
 
 And the reference databasesheet should be formatted as follows:
