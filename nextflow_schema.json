@@ -165,7 +165,8 @@
                     "type": "string",
                     "fa_icon": "fas fa-list",
                     "description": "Space-delimited list of taxonomic IDs to filter",
-                    "help_text": "IDs can be from any taxonomic rank"
+                    "help_text": "IDs can be from any taxonomic rank",
+                    "default": null
                 },
                 "kraken2_filtering_mode": {
                     "type": "string",

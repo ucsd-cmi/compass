@@ -169,7 +169,7 @@ Help Text: This allows you to either include or exclude reads with specific taxo
 - kraken2_filtering_taxids
 ```
 Type: string
-Default: ""
+Default: null
 Description: Space-delimited list of taxonomic IDs to filter
 Help Text: IDs can be from any taxonomic rank
 ```
