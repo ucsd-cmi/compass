@@ -154,6 +154,42 @@
                     "help_text": "Given that Kraken2 is currently the only profiler available, this should not be changed to false.",
                     "default": true
                 },
+                "do_kraken2_filtering": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Determines whether to use KrakenTools/extract_kraken_reads to filter Kraken2 output",
+                    "help_text": "This allows you to either include or exclude reads with specific taxonomic IDs from downstream output. Running this will also cause Kraken2 to be re-run on this tool's output.",
+                    "default": false
+                },
+                "kraken2_filtering_taxids": {
+                    "type": "string",
+                    "fa_icon": "fas fa-list",
+                    "description": "Space-delimited list of taxonomic IDs to filter",
+                    "help_text": "IDs can be from any taxonomic rank",
+                    "default": null
+                },
+                "kraken2_filtering_mode": {
+                    "type": "string",
+                    "fa_icon": "fas fa-list",
+                    "description": "Determines whether the specified taxonomic IDs are included (kept) or excluded (discarded)",
+                    "help_text": "Default behavior is to exclude for the purpose of ensuring host reads are fully removed.",
+                    "enum": ["exclude", "include"],
+                    "default": "exclude"
+                },
+                "kraken2_filtering_include_parents": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Determines whether parent taxonomic IDs should be included in filter",
+                    "help_text": "Determines whether parent taxonomic IDs should be included in filter",
+                    "default": false
+                },
+                "kraken2_filtering_include_children": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Determines whether child taxonomic IDs should be included in filter",
+                    "help_text": "Determines whether child taxonomic IDs should be included in filter",
+                    "default": false
+                },
                 "do_bracken": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-on",

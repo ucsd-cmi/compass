@@ -158,6 +158,47 @@ Description: Determines whether to run Kraken2
 Help Text: Given that Kraken2 is currently the only profiler available, this should not be changed to false.
 ```
 
+- do_kraken2_filtering
+```
+Type: boolean
+Default: false
+Description: Determines whether to use KrakenTools/extract_kraken_reads to filter Kraken2 output
+Help Text: This allows you to either include or exclude reads with specific taxonomic IDs from downstream output. Running this will also cause Kraken2 to be re-run on this tool's output.
+```
+
+- kraken2_filtering_taxids
+```
+Type: string
+Default: null
+Description: Space-delimited list of taxonomic IDs to filter
+Help Text: IDs can be from any taxonomic rank
+```
+
+- kraken2_filtering_mode
+```
+Type: string
+Valid Values: exclude, include
+Defualt: exclude
+Description: Determines whether the specified taxonomic IDs are included (kept) or excluded (discarded)
+Help Text: Default behavior is to exclude for the purpose of ensuring host reads are fully removed.
+```
+
+- kraken2_filtering_include_parents
+```
+Type: boolean
+Default: false
+Description: Determines whether parent taxonomic IDs should be included in filter
+Help Text: Determines whether parent taxonomic IDs should be included in filter
+```
+
+- kraken2_filtering_include_children
+```
+Type: boolean
+Default: false
+Description: Determines whether child taxonomic IDs should be included in filter
+Help Text: Determines whether child taxonomic IDs should be included in filter
+```
+
 - do_bracken
 ```
 Type: boolean

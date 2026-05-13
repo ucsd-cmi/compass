@@ -17,6 +17,7 @@ The current toolset is fairly linear, but we anticipate adding alternative tools
 - Samtools for generation of host-read removal statistics
 - Cat/FASTQ as necessary for merging samples with multiple runs
 - Kraken2 and Bracken for taxonomic classification and profiling
+- KrakenTools for filtering Kraken2 results
 - taxpasta for the optional standardization of taxonomic profile output
 - MultiQC for report generation
 
