@@ -95,15 +95,35 @@ workflow PIPELINE_INITIALISATION {
     //
     // Validate pipeline-specific parameters
     //
-    if (params.do_preprocessing && params.adapter_list) {
-        def adapter_list_f = file(params.adapter_list, checkIfExists: true)
-        if (!adapter_list_f.extension.matches(".*(fa|fasta|fna|fas)")) {
-            error("ERROR: Adapter list must be a FASTA file with an extension of .fa, .fas, .fna, or .fasta. Please check --adapter_list parameter ${params.adapter_list}")
+    if (params.shotgun_do_preprocessing && params.shotgun_adapter_list) {
+        def shotgun_adapter_list_f = file(params.shotgun_adapter_list, checkIfExists: true)
+        if (!shotgun_adapter_list_f.extension.matches(".*(fa|fasta|fna|fas)")) {
+            error("ERROR: Adapter list must be a FASTA file with an extension of .fa, .fas, .fna, or .fasta. Please check --shotgun_adapter_list parameter ${params.shotgun_adapter_list}")
         }
     }
 
-    if (!params.do_kraken2 && params.do_bracken) {
+    if (!params.shotgun_do_kraken2 && params.shotgun_do_bracken) {
         error("ERROR: You may not run Bracken without also running Kraken2")
+    }
+
+    if (params.amplicon_taxonomy_for_analysis == "qiime2" && !params.amplicon_do_taxonomic_classification_qiime2) {
+        error("ERROR: You have selected QIIME 2 for downstream analysis but have not opted to run QIIME 2 taxonomic classification. Please review your selected parameters.")
+    }
+
+    if (params.amplicon_taxonomy_for_analysis == "dada2" && !params.amplicon_do_taxonomic_classification_dada2) {
+        error("ERROR: You have selected DADA2 for downstream analysis but have not opted to run DADA2 taxonomic classification. Please review your selected parameters.")
+    }
+
+    if (params.amplicon_do_taxonomic_classification_dada2_species && !params.amplicon_do_taxonomic_classification_dada2) {
+        error("ERROR: You have opted to run the DADA2 addSpecies function without running DADA2 taxonomic classification. Please review your selected parameters.")
+    }
+
+    if (params.amplicon_do_alpha_diversity_phylogenetic && !params.amplicon_do_phylogenetic_placement) {
+        error("ERROR: You have opted to calculate phylogenetic alpha diversity without running phylogenetic placement. Please review your selected parameters.")
+    }
+
+    if (params.amplicon_do_beta_diversity_phylogenetic && !params.amplicon_do_phylogenetic_placement) {
+        error("ERROR: You have opted to calculate phylogenetic beta diversity without running phylogenetic placement. Please review your selected parameters.")
     }
 
     emit:
@@ -185,12 +205,12 @@ def toolCitationText() {
     def citation_text = [
             "Tools used in the workflow included:",
             "FastQC (Andrews 2010),",
-            params.do_preprocessing ? "fastp (Chen 2025)," : "",
-            params.do_host_removal ? "Bowtie2 (Langmead et al. 2012), SAMTools (Danecek et al. 2021)," : "",
-            params.do_read_pairing ? "SeqKit (Shen et al. 2024)," : "",
-            params.do_kraken2 ? "Kraken2 (Wood et al. 2019)," : "",
-            params.do_bracken ? "Bracken (Lu et al. 2017)," : "",
-            params.do_profiling_standardisation ? "TAXPASTA (Beber et al. 2023)," : "",
+            params.shotgun_do_preprocessing ? "fastp (Chen 2025)," : "",
+            params.shotgun_do_host_removal ? "Bowtie2 (Langmead et al. 2012), SAMTools (Danecek et al. 2021)," : "",
+            params.shotgun_do_read_pairing ? "SeqKit (Shen et al. 2024)," : "",
+            params.shotgun_do_kraken2 ? "Kraken2 (Wood et al. 2019)," : "",
+            params.shotgun_do_bracken ? "Bracken (Lu et al. 2017)," : "",
+            params.shotgun_do_profiling_standardisation ? "TAXPASTA (Beber et al. 2023)," : "",
             "MultiQC (Ewels et al. 2016)",
             "."
         ].join(' ').trim()
@@ -203,12 +223,19 @@ def toolBibliographyText() {
     // Uncomment function in methodsDescriptionText to render in MultiQC report
     def reference_text = [
             "<li>Andrews S, (2010) FastQC, URL: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).</li>",
-            params.do_preprocessing ? "<li>Chen S. fastp 1.0: An ultra-fast all-round tool for FASTQ data quality control and preprocessing. Imeta. 2025 Sep 9;4(5):e70078. doi: 10.1002/imt2.70078. PMID: 41112039; PMCID: PMC12527978.</li>" : "",
-            params.do_host_removal ? "<li>Langmead, B., Salzberg, S. Fast gapped-read alignment with Bowtie 2. Nat Methods 9, 357–359 (2012). https://doi.org/10.1038/nmeth.1923</li><li>Petr Danecek, James K Bonfield, Jennifer Liddle, John Marshall, Valeriu Ohan, Martin O Pollard, Andrew Whitwham, Thomas Keane, Shane A McCarthy, Robert M Davies, Heng Li, Twelve years of SAMtools and BCFtools, GigaScience, Volume 10, Issue 2, February 2021, giab008, https://doi.org/10.1093/gigascience/giab008</li>" : "",
-            params.do_read_pairing ? "<li>Wei Shen*, Botond Sipos, and Liuyang Zhao. 2024. SeqKit2: A Swiss Army Knife for Sequence and Alignment Processing. iMeta e191. doi:10.1002/imt2.191.</li>" : "",
-            params.do_kraken2 ? "<li>Wood, D.E., Lu, J. & Langmead, B. Improved metagenomic analysis with Kraken 2. Genome Biol 20, 257 (2019). https://doi.org/10.1186/s13059-019-1891-0</li>" : "",
-            params.do_bracken ? "<li>Lu J, Breitwieser FP, Thielen P, Salzberg SL. 2017. Bracken: estimating species abundance in metagenomics data. PeerJ Computer Science 3:e104 https://doi.org/10.7717/peerj-cs.104</li>" : "",
-            params.do_profiling_standardisation ? "<li>Beber, M. E., Borry, M., Stamouli, S., & Fellows Yates, J. A. (2023). TAXPASTA: TAXonomic Profile Aggregation and STAndardisation. Journal of Open Source Software, 8(87), 5627. https://doi.org/10.21105/joss.05627</li>" : "",
+            params.workflow_mode == "shotgun" && params.shotgun_do_preprocessing ? "<li>Chen S. fastp 1.0: An ultra-fast all-round tool for FASTQ data quality control and preprocessing. Imeta. 2025 Sep 9;4(5):e70078. doi: 10.1002/imt2.70078. PMID: 41112039; PMCID: PMC12527978.</li>" : "",
+            params.workflow_mode == "shotgun" && params.shotgun_do_host_removal ? "<li>Langmead, B., Salzberg, S. Fast gapped-read alignment with Bowtie 2. Nat Methods 9, 357–359 (2012). https://doi.org/10.1038/nmeth.1923</li><li>Petr Danecek, James K Bonfield, Jennifer Liddle, John Marshall, Valeriu Ohan, Martin O Pollard, Andrew Whitwham, Thomas Keane, Shane A McCarthy, Robert M Davies, Heng Li, Twelve years of SAMtools and BCFtools, GigaScience, Volume 10, Issue 2, February 2021, giab008, https://doi.org/10.1093/gigascience/giab008</li>" : "",
+            params.workflow_mode == "shotgun" && params.shotgun_do_read_pairing ? "<li>Wei Shen*, Botond Sipos, and Liuyang Zhao. 2024. SeqKit2: A Swiss Army Knife for Sequence and Alignment Processing. iMeta e191. doi:10.1002/imt2.191.</li>" : "",
+            params.workflow_mode == "shotgun" && params.shotgun_do_kraken2 ? "<li>Wood, D.E., Lu, J. & Langmead, B. Improved metagenomic analysis with Kraken 2. Genome Biol 20, 257 (2019). https://doi.org/10.1186/s13059-019-1891-0</li>" : "",
+            params.workflow_mode == "shotgun" && params.shotgun_do_kraken2_filtering ? "<li>Lu, J., Rincon, N., Wood, D.E. et al. Metagenome analysis using the Kraken software suite. Nat Protoc 17, 2815–2839 (2022). https://doi.org/10.1038/s41596-022-00738-y</li>" : "",
+            params.workflow_mode == "shotgun" && params.shotgun_do_bracken ? "<li>Lu J, Breitwieser FP, Thielen P, Salzberg SL. 2017. Bracken: estimating species abundance in metagenomics data. PeerJ Computer Science 3:e104 https://doi.org/10.7717/peerj-cs.104</li>" : "",
+            params.workflow_mode == "shotgun" && params.shotgun_do_profiling_standardisation ? "<li>Beber, M. E., Borry, M., Stamouli, S., & Fellows Yates, J. A. (2023). TAXPASTA: TAXonomic Profile Aggregation and STAndardisation. Journal of Open Source Software, 8(87), 5627. https://doi.org/10.21105/joss.05627</li>" : "",
+            params.workflow_mode == "amplicon" ? "<li>Callahan, B., McMurdie, P., Rosen, M. et al. DADA2: High-resolution sample inference from Illumina amplicon data. Nat Methods 13, 581–583 (2016). https://doi.org/10.1038/nmeth.3869</li>" : "",
+            params.workflow_mode == "amplicon" ? "<li>Bolyen, E., Rideout, J.R., Dillon, M.R. et al. Reproducible, interactive, scalable and extensible microbiome data science using QIIME 2. Nat Biotechnol 37, 852–857 (2019). https://doi.org/10.1038/s41587-019-0209-9</li>" : "",
+            params.workflow_mode == "amplicon" ? "<li>Csárdi G (2026). cli: Helpers for Developing Command Line Interfaces. R package version 3.6.6, https://cli.r-lib.org.</li>" : "",
+            params.workflow_mode == "amplicon" && params.amplicon_do_cutadapt ? "<li>Marcel, M. Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet journal 17.1 (2011): pp-10. https://doi.org/10.14806/ej.17.1.200</li>" : "",
+            params.workflow_mode == "amplicon" && params.amplicon_calculate_trunclen ? "<li>Morgan M, Anders S, Lawrence M, Aboyoun P, Pagès H, Gentleman R (2009). “ShortRead: a Bioconductor package for input, quality assessment and exploration of high-throughput sequence data.” Bioinformatics, 25, 2607-2608. doi:10.1093/bioinformatics/btp450. http://dx.doi.org10.1093/bioinformatics/btp450.</li>" : "",
+            params.workflow_mode == "amplicon" && params.amplicon_do_phylogenetic_placement ? "<li>Mirarab S, Nguyen N, Warnow T. SEPP: SATé-enabled phylogenetic placement. Pac Symp Biocomput. 2012:247-58. doi: 10.1142/9789814366496_0024. PMID: 22174280.</li>" : "",
             "<li>Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics , 32(19), 3047–3048. doi: /10.1093/bioinformatics/btw354</li>"
         ].join(' ').trim()
 

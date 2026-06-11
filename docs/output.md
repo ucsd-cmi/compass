@@ -4,9 +4,9 @@
 
 This document describes the output produced by the pipeline, broken down by tool. For information on including or excluding tools from the workflow, please see the [usage doc](usage.md). For details on any given tool's inner workings, please see its respective website.
 
-## Output Structure
+## Output Structure - Shotgun Samples
 
-All directory paths below are relative to the main output directory.
+All directory paths below are relative to the main output directory for shotgun data.
 
 ### FastQC
 
@@ -69,7 +69,7 @@ If you opt to run profiling standardisation, the following output will appear in
 
 ### MultiQC
 
-Regardless of pipeline parameters, MultiQC runs at the conclusion of every workflow instance and produces an HTML report, along with supporting data and visualizations, in the /multiqc directory.
+Regardless of pipeline parameters, MultiQC runs at the conclusion of every workflow instance and produces an HTML report, along with supporting data and visualizations, in the /multiqc directory. Please note, the MultiQC report includes a dynamic citation list, but does not currently include citations for reference databases used during the pipeline execution. Please ensure you're citing all of the reference databases you utilize. This note will be updated when the MultiQC report has been adjusted to auotmatically include data citations.
 
 ### Pipeline Info
 

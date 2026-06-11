@@ -10,7 +10,7 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": ["input", "outdir", "ref_databases"],
+            "required": ["input", "outdir", "ref_databases", "workflow_mode"],
             "properties": {
                 "input": {
                     "type": "string",
@@ -50,62 +50,69 @@
                     "description": "Path to comma-separated file containing information about reference databases to use in the pipeline.",
                     "fa_icon": "fas fa-file-csv"
                 },
-                "adapter_list": {
+                "workflow_mode": {
+                    "type": "string",
+                    "description": "Workflow mode for the pipeline",
+                    "help_text": "Determines whether the pipeline is in shotgun metagenomics mode or 16S mode.",
+                    "fa_icon": "fas fa-toggle-on",
+                    "enum": ["shotgun", "amplicon"]
+                },
+                "shotgun_adapter_list": {
                     "type": "string",
                     "format": "file-path",
-                    "description": "Path to a list of adapters to use in sample pre-processing",
+                    "description": "Path to a list of adapters to use in shotgun metagenomic sample pre-processing",
                     "fa_icon": "fas fa-folder-open"
                 }
             }
         },
-        "preprocessing_options": {
+        "shotgun_preprocessing_options": {
             "title": "Pre-processing options",
             "type": "object",
             "description": "Options related to sample pre-processing",
             "properties": {
-                "do_preprocessing": {
+                "shotgun_do_preprocessing": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-on",
-                    "description": "Determines whether to do sample pre-processing steps",
+                    "description": "Determines whether to do shotgun metagenomic sample pre-processing steps",
                     "help_text": "It's generally recommended to do pre-processing unless you know it has already been performed using external tools.",
                     "default": true
                 },
-                "preprocessing_min_read_length": {
+                "shotgun_preprocessing_min_read_length": {
                     "type": "integer",
                     "fa_icon": "fas fa-ruler-horizontal",
-                    "description": "Minimum length of reads to preserve and process",
+                    "description": "Minimum length of reads to preserve and process for shotgun metagenomic samples",
                     "help_text": "Changing the minimum read length will impact both profiling speed and accuracy.",
                     "default": 15
                 },
-                "preprocessing_fastp_qualified_quality_phred": {
+                "shotgun_preprocessing_fastp_qualified_quality_phred": {
                     "type": "integer",
                     "fa_icon": "fas fa-ruler-horizontal",
-                    "description": "Minimum phred quality score to consider a read qualified",
+                    "description": "Minimum phred quality score to consider a read qualified for shotgun metagenomic samples",
                     "help_text": "Increasing this value will enact stricter quality filtering.",
                     "default": 15
                 },
-                "preprocessing_fastp_cut_tail": {
+                "shotgun_preprocessing_fastp_cut_tail": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-off",
-                    "description": "Determines whether to use fastp's --cut_tail parameter",
+                    "description": "Determines whether to use fastp's --cut_tail parameter for shotgun metagenomic samples",
                     "help_text": "--cut_tail performs sliding window trimming from the 3' (tail) end of a read, removing low-quality bases based on mean quality.",
                     "default": false
                 }
             }
         },
-        "host_removal_options": {
+        "shotgun_host_removal_options": {
             "title": "Host removal options",
             "type": "object",
             "description": "Options related to host removal",
             "properties": {
-                "do_host_removal": {
+                "shotgun_do_host_removal": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-on",
-                    "description": "Determines whether to do host removal steps",
+                    "description": "Determines whether to do host removal steps for shotgun metagenomic samples",
                     "help_text": "It's generally recommended to perform host removal if you're interested in microbial composition",
                     "default": true
                 },
-                "host_removal_bowtie2_very_sensitive": {
+                "shotgun_host_removal_bowtie2_very_sensitive": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-on",
                     "description": "Determines whether to use the --very-sensitive parameter for Bowtie2",
@@ -114,61 +121,61 @@
                 }
             }
         },
-        "read_pairing_options": {
+        "shotgun_read_pairing_options": {
             "title": "Read pairing options",
             "type": "object",
             "description": "Options related to pairing reads",
             "properties": {
-                "do_read_pairing": {
+                "shotgun_do_read_pairing": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-on",
-                    "description": "Determines whether to ensure all reads in paired-end files are correctly paired",
+                    "description": "Determines whether to ensure all reads in paired-end files are correctly paired for shotgun metagenomic samples",
                     "help_text": "Setting this to true will drop singletons before proceeding with taxonomic profiling.",
                     "default": true
                 }
             }
         },
-        "run_merging_options": {
+        "shotgun_run_merging_options": {
             "title": "Run merging options",
             "type": "object",
             "description": "Options related to run merging",
             "properties": {
-                "do_run_merging": {
+                "shotgun_do_run_merging": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-off",
-                    "description": "Determines whether to merge samples with the sample sample_id",
+                    "description": "Determines whether to merge shotgun metagenomic samples with the same sample_id",
                     "help_text": "Optional step to merge samples prior to the profiling step.",
                     "default": false
                 }
             }
         },
-        "profiling_options": {
+        "shotgun_profiling_options": {
             "title": "Profiling options",
             "type": "object",
             "description": "Options related to taxonomic profiling",
             "properties": {
-                "do_kraken2": {
+                "shotgun_do_kraken2": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-on",
-                    "description": "Determines whether to run Kraken2",
+                    "description": "Determines whether to run Kraken2 for shotgun metagenomic samples",
                     "help_text": "Given that Kraken2 is currently the only profiler available, this should not be changed to false.",
                     "default": true
                 },
-                "do_kraken2_filtering": {
+                "shotgun_do_kraken2_filtering": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-off",
                     "description": "Determines whether to use KrakenTools/extract_kraken_reads to filter Kraken2 output",
                     "help_text": "This allows you to either include or exclude reads with specific taxonomic IDs from downstream output. Running this will also cause Kraken2 to be re-run on this tool's output.",
                     "default": false
                 },
-                "kraken2_filtering_taxids": {
+                "shotgun_kraken2_filtering_taxids": {
                     "type": "string",
                     "fa_icon": "fas fa-list",
                     "description": "Space-delimited list of taxonomic IDs to filter",
                     "help_text": "IDs can be from any taxonomic rank",
                     "default": null
                 },
-                "kraken2_filtering_mode": {
+                "shotgun_kraken2_filtering_mode": {
                     "type": "string",
                     "fa_icon": "fas fa-list",
                     "description": "Determines whether the specified taxonomic IDs are included (kept) or excluded (discarded)",
@@ -176,42 +183,42 @@
                     "enum": ["exclude", "include"],
                     "default": "exclude"
                 },
-                "kraken2_filtering_include_parents": {
+                "shotgun_kraken2_filtering_include_parents": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-off",
                     "description": "Determines whether parent taxonomic IDs should be included in filter",
                     "help_text": "Determines whether parent taxonomic IDs should be included in filter",
                     "default": false
                 },
-                "kraken2_filtering_include_children": {
+                "shotgun_kraken2_filtering_include_children": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-off",
                     "description": "Determines whether child taxonomic IDs should be included in filter",
                     "help_text": "Determines whether child taxonomic IDs should be included in filter",
                     "default": false
                 },
-                "do_bracken": {
+                "shotgun_do_bracken": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-on",
-                    "description": "Determines whether to run Bracken",
+                    "description": "Determines whether to run Bracken for shotgun metagenomic samples",
                     "help_text": "Optional tool to estimate abundance of taxa within a sample. Requires Kraken2.",
                     "default": true
                 }
             }
         },
-        "profiling_standardisation_options": {
+        "shotgun_profiling_standardisation_options": {
             "title": "Profiling standardisation options",
             "type": "object",
             "description": "Options related to taxonomic profile standardisation using Taxpasta",
             "properties": {
-                "do_profiling_standardisation": {
+                "shotgun_do_profiling_standardisation": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-off",
-                    "description": "Determines whether to run Taxpasta",
+                    "description": "Determines whether to run Taxpasta for shotgun metagenomic samples",
                     "help_text": "Optional tool to standardise output from various taxonomic profiling tools.",
                     "default": false
                 },
-                "profiling_standardisation_format": {
+                "shotgun_profiling_standardisation_format": {
                     "type": "string",
                     "fa_icon": "fas file-text-o",
                     "description": "Output format from Taxpasta",
@@ -219,47 +226,423 @@
                     "enum": ["tsv", "csv", "ods", "xlsx", "arrow", "parquet", "biom"],
                     "default": "tsv"
                 },
-                "taxpasta_taxonomy": {
+                "shotgun_taxpasta_taxonomy": {
                     "type": "string",
                     "fa_icon": "fas fa-folder-open",
                     "description": "Path to directory containing taxdump files",
-                    "help_text": "For current pipeline usage, this should be the same path as the Kraken2 reference database",
+                    "help_text": "Path to directory containing taxdump files",
                     "default": "null"
                 },
-                "taxpasta_add_name": {
+                "shotgun_taxpasta_add_name": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-off",
                     "description": "Add taxon name to Taxpasta output",
                     "help_text": "Add taxon name to Taxpasta output",
                     "default": false
                 },
-                "taxpasta_add_rank": {
+                "shotgun_taxpasta_add_rank": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-off",
                     "description": "Add taxon rank to Taxpasta output",
                     "help_text": "Add taxon rank to Taxpasta output",
                     "default": false
                 },
-                "taxpasta_add_lineage": {
+                "shotgun_taxpasta_add_lineage": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-off",
                     "description": "Add full taxon lineage to Taxpasta output - names",
                     "help_text": "Taxon names separated by semicolons",
                     "default": false
                 },
-                "taxpasta_add_id_lineage": {
+                "shotgun_taxpasta_add_id_lineage": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-off",
                     "description": "Add full taxon lineage to Taxpasta output - IDs",
                     "help_text": "Taxon identifiers separated by semicolons",
                     "default": false
                 },
-                "taxpasta_add_rank_lineage": {
+                "shotgun_taxpasta_add_rank_lineage": {
                     "type": "boolean",
                     "fa_icon": "fas fa-toggle-off",
                     "description": "Add full taxon rank lineage to Taxpasta output",
                     "help_text": "Taxon ranks separated by semicolons",
                     "default": false
+                }
+            }
+        },
+        "amplicon_general_options": {
+            "title": "General options for amplicon samples",
+            "type": "object",
+            "description": "",
+            "properties": {
+                "amplicon_random_seed": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler_horizontal",
+                    "description": "Random number seed used for certain processing tools.",
+                    "help_text": "Can be left at the default value aside from very special circumstances.",
+                    "default": 66
+                },
+                "amplicon_paired_end_data": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether the pipeline processes incoming samples as paired-end data.",
+                    "help_text": "Set to true for paired-end data and false for single-end data.",
+                    "default": true
+                }
+            }
+        },
+        "amplicon_preprocessing_options": {
+            "title": "Preprocessing options for amplicon samples",
+            "type": "object",
+            "description": "",
+            "properties": {
+                "amplicon_do_cutadapt": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether cutadapt runs on incoming samples.",
+                    "help_text": "Can be set to false for samples that have already been through the trimming and primer removal process.",
+                    "default": true
+                },
+                "amplicon_minimum_read_count": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "Minimum read count for a sample to be considered valid",
+                    "help_text": "Minimum read count for a sample to be considered valid",
+                    "default": 1
+                },
+                "amplicon_forward_primer": {
+                    "type": "string",
+                    "fa_icon": "fas fa-arrow-right",
+                    "description": "Forward primer sequence",
+                    "help_text": "Forward primer sequence"
+                },
+                "amplicon_reverse_primer": {
+                    "type": "string",
+                    "fa_icon": "fas fa-arrow-left",
+                    "description": "Reverse primer sequence",
+                    "help_text": "Reverse primer sequence"
+                },
+                "amplicon_minimum_primer_overlap": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "Minimum overlap to be considered a valid match with a primer sequence.",
+                    "help_text": "This parameter corresponds to cutadapt's -O parameter.",
+                    "default": 3
+                },
+                "amplicon_maximum_primer_error_rate": {
+                    "type": "number",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "Maximum error rate to be considered a valid match with a primer sequence.",
+                    "help_text": "This parameter corresponds to cutadapt's -e parameter",
+                    "default": 0.1
+                },
+                "amplicon_calculate_trunclen": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether the pipeline will automatically calculate the truncation length for read trimming and filtering.",
+                    "help_text": "If this is true, the pipeline will calculate a truncation length based on the point at which the quality score drops below the amplicon_calculate_trunclen_quality_threshold parameter. If this is false, the pipeline will use the amplicon_trunclen_forward and amplicon_trunclen_reverse parameters.",
+                    "default": true
+                },
+                "amplicon_calculate_trunclen_quality_threshold": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "The minimum median quality score that will be used to calculate a truncation point for both forward and reverse reads.",
+                    "help_text": "The minimum median quality score that will be used to calculate a truncation point for both forward and reverse reads.",
+                    "default": 20
+                },
+                "amplicon_trunclen_forward": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "The number of bases after which forward reads will be truncated, to be used only if amplicon_calculate_trunclen is false.",
+                    "help_text": "If set to 0, forward reads will not be truncated.",
+                    "default": 0
+                },
+                "amplicon_trunclen_reverse": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "The number of bases after which reverse reads will be truncated, to be used only if amplicon_calculate_trunclen is false.",
+                    "help_text": "If set to 0, reverse reads will not be truncated.",
+                    "default": 0
+                },
+                "amplicon_truncate_below_read_quality": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "Truncate reads at the first instance of a quality score less than or equal to this value, corresponding to the truncQ parameter for DADA2's filterAndTrim function.",
+                    "help_text": "Truncate reads at the first instance of a quality score less than or equal to this value, corresponding to the truncQ parameter for DADA2's filterAndTrim function.",
+                    "default": 2
+                },
+                "amplicon_trim_left": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "The number of nucleotides to remove from the beginning of each read during DADA2's filterAndTrim function.",
+                    "help_text": "The number of nucleotides to remove from the beginning of each read during DADA2's filterAndTrim function.",
+                    "default": 0
+                },
+                "amplicon_trim_right": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "The number of nucleotides to remove from the end of each read during DADA2's filterAndTrim function.",
+                    "help_text": "The number of nucleotides to remove from the end of each read during DADA2's filterAndTrim function.",
+                    "default": 0
+                },
+                "amplicon_maximum_length_before_trimming": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "Maximum read length before trimming, corresponding to the maxLen parameter for DADA2's filterAndTrim function.",
+                    "help_text": "A value of -1 will disable the parameter.",
+                    "default": -1
+                },
+                "amplicon_minimum_length_after_trimming": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "Minimum read length after trimming, corresponding to the minLen parametr for DADA2's filterAndTrim function.",
+                    "help_text": "Minimum read length after trimming, corresponding to the minLen parametr for DADA2's filterAndTrim function.",
+                    "default": 50
+                },
+                "amplicon_maximum_expected_error": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "Maximum expected errors for a read to be kept after trimming, corresponding to the maxEE parameter for DADA2's filterAndTrim function",
+                    "help_text": "A value of -1 will disable the parameter.",
+                    "default": -1
+                },
+                "amplicon_abort_failed_preprocessing": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Determines whether the pipeline will abort when any samples fall below the amplicon_minimum_read_count parameter's threshold after preprocessing.",
+                    "help_text": "When this parameter is set to true, the pipeline will abort. Otherwise, the pipeline will continue with samples whose read count is greater than amplicon_minimum_read_count.",
+                    "default": false
+                }
+            }
+        },
+        "amplicon_asv_inference_options": {
+            "title": "ASV inference options for amplicon samples",
+            "type": "object",
+            "description": "",
+            "properties": {
+                "amplicon_do_remove_chimeras": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether chimeric reads are removed.",
+                    "help_text": "Removal of chimeric reads should only be skipped under very specific circumstances and with caution.",
+                    "default": true
+                }
+            }
+        },
+        "amplicon_taxonomic_classification_options": {
+            "title": "Taxonomic classification options for amplicon samples",
+            "type": "object",
+            "description": "",
+            "properties": {
+                "amplicon_do_taxonomic_classification_dada2": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether taxonomic classification via DADA2 is performed.",
+                    "help_text": "Determines whether taxonomic classification via DADA2 is performed.",
+                    "default": false
+                },
+                "amplicon_taxonomic_classification_dada2_min_boot": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "The minimum bootstrap confidence for assigning a taxonomic level.",
+                    "help_text": "The minimum bootstrap confidence for assigning a taxonomic level.",
+                    "default": 50
+                },
+                "amplicon_do_taxonomic_classification_dada2_species": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether the DADA2 addSpecies function is included in taxonomic classification.",
+                    "help_text": "Determines whether the DADA2 addSpecies function is included in taxonomic classification. Requires performing taxonomic classification via DADA2.",
+                    "default": false
+                },
+                "amplicon_taxonomic_classification_species_multiple": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Determines whether dada2's addSpecies function is permitted to return multiple exact species-level matches for a given sequence.",
+                    "help_text": "Setting this to false will return only unique matches, while true will return a comma-delimited list of exact matches.",
+                    "default": false
+                },
+                "amplicon_do_taxonomic_classification_qiime2": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether taxonomic classification via QIIME 2 is performed.",
+                    "help_text": "Determines whether taxonomic classification via QIIME 2 is performed.",
+                    "default": true
+                }
+            }
+        },
+        "amplicon_phylogenetic_placement_options": {
+            "title": "Phylogenetic placement options for amplicon samples",
+            "type": "object",
+            "description": "",
+            "properties": {
+                "amplicon_do_phylogenetic_placement": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines if phylogenetic placement is performed.",
+                    "help_text": "Determines if phylogenetic placement is performed.",
+                    "default": true
+                }
+            }
+        },
+        "amplicon_taxa_filtering_options": {
+            "title": "Taxa filtering options for amplicon samples",
+            "type": "object",
+            "description": "",
+            "properties": {
+                "amplicon_taxa_to_exclude": {
+                    "type": "string",
+                    "fa_icon": "fas fa-list",
+                    "description": "List of taxa to exclude from downstream analysis",
+                    "help_text": "Comma-delimited list of terms to use for taxa filtering. Terms will be both fully and partially matched, can be any level of taxa, and should match the terminology used in your selected reference database."
+                },
+                "amplicon_minimum_abundance": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "Minimum absolute abundance to remain in the feature table",
+                    "help_text": "A value of 1 will effectively disable the filter, while higher values will remove sequences with abundance counts under the threshold.",
+                    "default": 1
+                },
+                "amplicon_minimum_prevalence": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "Minimum prevalence (or number of samples in which a taxon appears) to remain in the feature table",
+                    "help_text": "A value of 1 will effectively disable the filter, while higher values will remove sequences that appear in fewer samples than the threshold.",
+                    "default": 1
+                }
+            }
+        },
+        "amplicon_analysis_options": {
+            "title": "Analysis options for amplicon samples",
+            "type": "object",
+            "description": "",
+            "properties": {
+                "amplicon_do_rarefaction": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-on",
+                    "description": "Determines whether rarefaction is performed before calculating diversity indices.",
+                    "help_text": "Determines whether rarefaction is performed before calculating diversity indices.",
+                    "default": true
+                },
+                "amplicon_rarefaction_minimum_sample_depth": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "Minimum sampling depth to keep samples within the set.",
+                    "help_text": "Minimum sampling depth to keep samples within the set.",
+                    "default": 500
+                },
+                "amplicon_taxonomy_for_analysis": {
+                    "type": "string",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Determines which tool's taxonomic classification to use for downstream analysis.",
+                    "help_text": "Current options are qiime2 and dada2. Please ensure that you allow the taxonomic classifier of choice to run, or the pipeline will return an error. Leaving this blank will bypass all analysis steps.",
+                    "default": "qiime2",
+                    "enum": ["qiime2", "dada2", ""]
+                },
+                "amplicon_do_export_sequences_absolute": {
+                    "type": "boolean",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Determines whether an absolute abundance table of representative sequences is exported.",
+                    "help_text": "Determines whether an absolute abundance table of representative sequences is exported.",
+                    "default": true
+                },
+                "amplicon_do_export_sequences_relative": {
+                    "type": "boolean",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Determines whether a relative abundance table of representative sequences is exported.",
+                    "help_text": "Determines whether a relative abundance table of representative sequences is exported.",
+                    "default": true
+                },
+                "amplicon_do_export_taxonomy_absolute": {
+                    "type": "boolean",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Determines whether absolute abundance tables of taxonomic features are exported.",
+                    "help_text": "Determines whether absolute abundance tables of taxonomic features are exported.",
+                    "default": true
+                },
+                "amplicon_export_taxonomy_absolute_collapse_levels": {
+                    "type": "string",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Determines what taxonomic levels the absolute abundance table is collapsed to for export. Provide a comma-delimited list of integers.",
+                    "help_text": "Numeric values correspond to taxonomic tier from broadest (Kingdom = 1) to most specific (Species = 7). Selected levels need not be consecutive - for example a parameter of '2,4,6' would export tables collapsed to Phylum, Order, and Genus.",
+                    "default": "6"
+                },
+                "amplicon_do_export_taxonomy_relative": {
+                    "type": "boolean",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Determines whether relative abundance tables of taxonomic features are exported.",
+                    "help_text": "Determines whether relative abundance tables of taxonomic features are exported.",
+                    "default": true
+                },
+                "amplicon_export_taxonomy_relative_collapse_levels": {
+                    "type": "string",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Determines what taxonomic levels the relative abundance table is collapsed to for export. Provide a comma-delimited list of integers.",
+                    "help_text": "Numeric values correspond to taxonomic tier from broadest (Kingdom = 1) to most specific (Species = 7). Selected levels need not be consecutive - for example a parameter of '2,4,6' would export tables collapsed to Phylum, Order, and Genus.",
+                    "default": "6"
+                },
+                "amplicon_do_export_taxonomy_barplot": {
+                    "type": "boolean",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Determines whether QIIME 2's built-in barplot feature is used to generate a visualization of the taxonomy.",
+                    "help_text": "Determines whether QIIME 2's built-in barplot feature is used to generate a visualization of the taxonomy.",
+                    "default": true
+                },
+                "amplicon_do_alpha_diversity": {
+                    "type": "boolean",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Determines whether alpha diversity is calculated and returned.",
+                    "help_text": "Determines whether alpha diversity is calculated and returned.",
+                    "default": true
+                },
+                "amplicon_alpha_diversity_metrics": {
+                    "type": "string",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Comma-delimited list of which metrics should be used to calculate alpha diversity.",
+                    "help_text": "Please refer to https://docs.qiime2.org/2024.10/plugins/available/diversity/alpha/ for a full list of valid metrics.",
+                    "default": "shannon,observed_features"
+                },
+                "amplicon_do_alpha_diversity_phylogenetic": {
+                    "type": "boolean",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Determines whether phylogenetic alpha diversity is calculated and returned.",
+                    "help_text": "Determines whether phylogenetic alpha diversity is calculated and returned.",
+                    "default": true
+                },
+                "amplicon_alpha_diversity_phylogenetic_metrics": {
+                    "type": "string",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Comma-delimited list of which metrics should be used to calculate phylogenetic alpha diversity.",
+                    "help_text": "Currently, faith_pd is the only available metric.",
+                    "default": "faith_pd"
+                },
+                "amplicon_do_beta_diversity": {
+                    "type": "boolean",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Determines whether beta diversity is calculated and returned.",
+                    "help_text": "Determines whether beta diversity is calculated and returned.",
+                    "default": true
+                },
+                "amplicon_beta_diversity_metrics": {
+                    "type": "string",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Comma-delimited list of which metrics should be used to calculate beta diversity.",
+                    "help_text": "Please refer to https://docs.qiime2.org/2024.10/plugins/available/diversity/beta/ for a full list of valid metrics.",
+                    "default": "braycurtis,jaccard"
+                },
+                "amplicon_do_beta_diversity_phylogenetic": {
+                    "type": "boolean",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Determines whether phylogenetic beta diversity is calculated and returned.",
+                    "help_text": "Determines whether phylogenetic beta diversity is calculated and returned.",
+                    "default": true
+                },
+                "amplicon_beta_diversity_phylogenetic_metrics": {
+                    "type": "string",
+                    "fa-icon": "fas fa-toggle-on",
+                    "description": "Comma-delimited list of which metrics should be used to calculate phylogenetic beta diversity.",
+                    "help_text": "Please refer to https://docs.qiime2.org/2024.10/plugins/available/diversity/beta-phylogenetic/ for a full list of valid metrics.",
+                    "default": "unweighted_unifrac,weighted_normalized_unifrac"
                 }
             }
         },
@@ -371,22 +754,43 @@
             "$ref": "#/$defs/input_output_options"
         },
         {
-            "$ref": "#/$defs/preprocessing_options"
+            "$ref": "#/$defs/shotgun_preprocessing_options"
         },
         {
-            "$ref": "#/$defs/host_removal_options"
+            "$ref": "#/$defs/shotgun_host_removal_options"
         },
         {
-            "$ref": "#/$defs/read_pairing_options"
+            "$ref": "#/$defs/shotgun_read_pairing_options"
         },
         {
-            "$ref": "#/$defs/run_merging_options"
+            "$ref": "#/$defs/shotgun_run_merging_options"
         },
         {
-            "$ref": "#/$defs/profiling_options"
+            "$ref": "#/$defs/shotgun_profiling_options"
         },
         {
-            "$ref": "#/$defs/profiling_standardisation_options"
+            "$ref": "#/$defs/shotgun_profiling_standardisation_options"
+        },
+        {
+            "$ref": "#/$defs/amplicon_general_options"
+        },
+        {
+            "$ref": "#/$defs/amplicon_preprocessing_options"
+        },
+        {
+            "$ref": "#/$defs/amplicon_asv_inference_options"
+        },
+        {
+            "$ref": "#/$defs/amplicon_taxonomic_classification_options"
+        },
+        {
+            "$ref": "#/$defs/amplicon_phylogenetic_placement_options"
+        },
+        {
+            "$ref": "#/$defs/amplicon_taxa_filtering_options"
+        },
+        {
+            "$ref": "#/$defs/amplicon_analysis_options"
         },
         {
             "$ref": "#/$defs/generic_options"

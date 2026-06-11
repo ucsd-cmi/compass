@@ -20,6 +20,11 @@
                         "git_sha": "cf735af4433f2dc8e410f67012dff824ef9990eb",
                         "installed_by": ["modules"]
                     },
+                    "cutadapt": {
+                        "branch": "master",
+                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+                        "installed_by": ["modules"]
+                    },
                     "fastp": {
                         "branch": "master",
                         "git_sha": "a331ecfd1aa48b2b2298aab23bb4516c800e410b",
@@ -39,7 +44,7 @@
                     },
                     "krakentools/extractkrakenreads": {
                         "branch": "master",
-                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+                        "git_sha": "03bd94fc81b464595bcef5d9dc3f06ea1f34bfa0",
                         "installed_by": ["modules"]
                     },
                     "multiqc": {

@@ -8,7 +8,7 @@
 
 > Di Tommaso P, Chatzou M, Floden EW, Barja PP, Palumbo E, Notredame C. Nextflow enables reproducible computational workflows. Nat Biotechnol. 2017 Apr 11;35(4):316-319. doi: 10.1038/nbt.3820. PubMed PMID: 28398311.
 
-## Pipeline tools
+## Pipeline tools and classifiers
 
 - [Bowtie2](https://doi.org/10.1038/nmeth.1923)
 
@@ -18,6 +18,18 @@
 
 > Lu J, Breitwieser FP, Thielen P, Salzberg SL. 2017. Bracken: estimating species abundance in metagenomics data. PeerJ Computer Science 3:e104 https://doi.org/10.7717/peerj-cs.104
 
+- [cli](https://cli.r-lib.org/)
+
+> Csárdi G (2026). cli: Helpers for Developing Command Line Interfaces. R package version 3.6.6, https://cli.r-lib.org.
+
+- [Cutadapt](https://doi.org/10.14806/ej.17.1.200)
+
+> Marcel, M. Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet journal 17.1 (2011): pp-10. doi: 10.14806/ej.17.1.200
+
+- [DADA2](https://doi.org/10.1038/nmeth.3869)
+
+> Callahan, B., McMurdie, P., Rosen, M. et al. DADA2: High-resolution sample inference from Illumina amplicon data. Nat Methods 13, 581–583 (2016). https://doi.org/10.1038/nmeth.3869
+
 - [fastp](https://doi.org/10.1002/imt2.70078)
 
 > Chen S. fastp 1.0: An ultra-fast all-round tool for FASTQ data quality control and preprocessing. Imeta. 2025 Sep 9;4(5):e70078. doi: 10.1002/imt2.70078. PMID: 41112039; PMCID: PMC12527978.
@@ -25,6 +37,10 @@
 - [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 
 > Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data [Online].
+
+- [Greengenes2](https://doi.org/10.1038/s41587-023-01845-1)
+
+> McDonald, D., Jiang, Y., Balaban, M. et al. Greengenes2 unifies microbial data in a single reference tree. Nat Biotechnol 42, 715–718 (2024). https://doi.org/10.1038/
 
 - [Kraken2](https://doi.org/10.1186/s13059-019-1891-0)
 
@@ -38,13 +54,29 @@
 
 > Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
 
+- [QIIME 2](https://doi.org/10.1038/s41587-019-0209-9)
+
+> Bolyen, E., Rideout, J.R., Dillon, M.R. et al. Reproducible, interactive, scalable and extensible microbiome data science using QIIME 2. Nat Biotechnol 37, 852–857 (2019). https://doi.org/10.1038/s41587-019-0209-9
+
 - [SAMTools](https://doi.org/10.1093/gigascience/giab008)
 
 > Petr Danecek, James K Bonfield, Jennifer Liddle, John Marshall, Valeriu Ohan, Martin O Pollard, Andrew Whitwham, Thomas Keane, Shane A McCarthy, Robert M Davies, Heng Li, Twelve years of SAMtools and BCFtools, GigaScience, Volume 10, Issue 2, February 2021, giab008, https://doi.org/10.1093/gigascience/giab008
 
+- [SEPP](https://doi.org/10.1142/9789814366496_0024)
+
+> Mirarab S, Nguyen N, Warnow T. SEPP: SATé-enabled phylogenetic placement. Pac Symp Biocomput. 2012:247-58. doi: 10.1142/9789814366496_0024. PMID: 22174280.
+
 - [SeqKit](https://doi.org/10.1002/imt2.191)
 
 > Wei Shen*, Botond Sipos, and Liuyang Zhao. 2024. SeqKit2: A Swiss Army Knife for Sequence and Alignment Processing. iMeta e191. doi:10.1002/imt2.191.
+
+- [ShortRead](https://doi.org/doi:10.18129/B9.bioc.ShortRead)
+
+> Morgan M, Anders S, Lawrence M, Aboyoun P, Pagès H, Gentleman R (2009). “ShortRead: a Bioconductor package for input, quality assessment and exploration of high-throughput sequence data.” Bioinformatics, 25, 2607-2608. doi:10.1093/bioinformatics/btp450. http://dx.doi.org10.1093/bioinformatics/btp450.
+
+- [SILVA](https://doi.org/10.1093/nar/gkaf1247)
+
+> Chuvochina M, Gerken J, Frentrup M, Sandikci Y, Goldmann R, Freese HM, Göker M, Sikorski J, Yarza P, Quast C, Peplies J, Glöckner FO, Reimer LC (2026) SILVA in 2026: a global core biodata resource for rRNA within the DSMZ digital diversity. Nucleic Acids Research, gkaf1247.
 
 - [TAXPASTA](https://doi.org/10.21105/joss.05627)
 
@@ -74,9 +106,13 @@
 
 ## Data
 
-- [Maixner (2021)](https://doi.org/10.1016/j.cub.2021.09.031) (FASTQ Files Used for Testing)
+- [Maixner (2021)](https://doi.org/10.1016/j.cub.2021.09.031) (FASTQ files used for testing shotgun pipeline)
 
 > Frank Maixner, Mohamed S. Sarhan, Kun D. Huang, Adrian Tett, Alexander Schoenafinger, Stefania Zingale, Aitor Blanco-Míguez, Paolo Manghi, Jan Cemper-Kiesslich, Wilfried Rosendahl, Ulrike Kusebauch, Seamus R. Morrone, Michael R. Hoopmann, Omar Rota-Stabelli, Thomas Rattei, Robert L. Moritz, Klaus Oeggl, Nicola Segata, Albert Zink, Hans Reschreiter, Kerstin Kowarik, (2021). Hallstatt miners consumed blue cheese and beer during the Iron Age and retained a non-Westernized gut microbiome until the Baroque period. Current Biology, Volume 31, Issue 23, https://doi.org/10.1016/j.cub.2021.09.031.
+
+- [Uzan-Yulzari A (2021)](https://doi.org/10.1038/s41467-020-20495-4) (FASTQ files used for testing amplicon pipeline)
+
+> Uzan-Yulzari A, Turta O, Belogolovski A, Ziv O, Kunz C, Perschbacher S, Neuman H, Pasolli E, Oz A, Ben-Amram H, Kumar H, Ollila H, Kaljonen A, Isolauri E, Salminen S, Lagström H, Segata N, Sharon I, Louzoun Y, Ensenauer R, Rautava S, Koren O. Neonatal antibiotic exposure impairs child growth during the first six years of life by perturbing intestinal microbial colonization. Nat Commun. 2021 Jan 26;12(1):443. doi: 10.1038/s41467-020-20495-4. PMID: 33500411; PMCID: PMC7838415.
 
 - [Guccione and Patel et al. (2024)](https://doi.org/10.1038/s41467-025-56077-5) (Known Adapters List)
 

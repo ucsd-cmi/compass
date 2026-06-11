@@ -7,7 +7,7 @@ include { KRAKENTOOLS_EXTRACTKRAKENREADS      } from '../../modules/nf-core/krak
 include { KRAKEN2_KRAKEN2 as KRAKEN2_FILTERED } from '../../modules/nf-core/kraken2/kraken2/main'
 include { BRACKEN_BRACKEN                     } from '../../modules/nf-core/bracken/bracken/main'
 
-workflow PROFILING {
+workflow SHOTGUN_PROFILING {
     take:
     reads
     ch_ref_databases
@@ -22,7 +22,7 @@ workflow PROFILING {
     /*
         MODULE: Kraken2
     */
-    if (params.do_kraken2) {
+    if (params.shotgun_do_kraken2) {
         ch_kraken2_ref = ch_ref_databases
             .filter { meta, path -> meta.tool == 'kraken2' }
 
@@ -39,10 +39,12 @@ workflow PROFILING {
             true,
             true
         )
+        ch_profiles = ch_profiles.mix(KRAKEN2_KRAKEN2.out.report)
+        ch_multiqc_files = ch_multiqc_files.mix(KRAKEN2_KRAKEN2.out.report)
 
-        if (params.do_kraken2_filtering) {
+        if (params.shotgun_do_kraken2_filtering) {
             KRAKENTOOLS_EXTRACTKRAKENREADS (
-                params.kraken2_filtering_taxids,
+                params.shotgun_kraken2_filtering_taxids,
                 KRAKEN2_KRAKEN2.out.classified_reads_assignment,
                 KRAKEN2_KRAKEN2.out.classified_reads_fastq,
                 KRAKEN2_KRAKEN2.out.report
@@ -77,7 +79,7 @@ workflow PROFILING {
     /*
         MODULE: Bracken
     */
-    if (params.do_kraken2 && params.do_bracken ) {
+    if (params.shotgun_do_kraken2 && params.shotgun_do_bracken ) {
         ch_bracken_ref = ch_ref_databases
             .filter { meta, path -> meta.tool == 'bracken'}
 
