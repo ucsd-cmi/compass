@@ -25,7 +25,7 @@ process DADA2_QUALITY_PROFILE {
     read_files <- sort(list.files(".", pattern = ".fastq.gz", full.names = TRUE))
 
     quality_plot <- plotQualityProfile(read_files, $args)
-    
+
     png("${prefix}.quality_stats_mqc.png")
     quality_plot
     dev.off()

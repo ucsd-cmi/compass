@@ -172,7 +172,7 @@ workflow SHOTGUN_WORKFLOW {
             ch_taxonomy
         )
     }
-    
+
     emit:
     versions        = ch_versions
     multiqc_output  = ch_multiqc_files

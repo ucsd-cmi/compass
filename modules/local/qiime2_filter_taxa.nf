@@ -28,7 +28,7 @@ process QIIME2_FILTER_TAXA {
             --o-filtered-table "feature_table_taxa_filtered.qza" \\
             --p-mode contains \\
             --p-exclude "${params.amplicon_taxa_to_exclude}"
-        
+
         taxa_filtered_table = "feature_table_taxa_filtered.qza"
     else
         taxa_filtered_table=${feature_table}

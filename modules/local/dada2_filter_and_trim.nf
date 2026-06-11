@@ -9,7 +9,7 @@ process DADA2_FILTER_AND_TRIM {
 
     input:
     tuple val(meta), path(reads), val(truncate_value_forward), val(truncate_value_reverse)
-    
+
     output:
     tuple val(meta), path("*.filtered.fastq.gz"), emit: filtered_reads
     path "versions.yml", emit: versions, topic: versions
@@ -27,14 +27,8 @@ process DADA2_FILTER_AND_TRIM {
 
     suppressPackageStartupMessages(library(dada2))
 
-    filtered_output <- filterAndTrim($input_and_output,
-        $truncate_arguments,
-        $args,
-        multithread = $task.cpus,
-        compress = TRUE,
-        verbose = TRUE
-    )
-    
+    filtered_output <- filterAndTrim($input_and_output, $truncate_arguments, $args, multithread = $task.cpus)
+
     filtered_output <- cbind(filtered_output, ID = row.names(filtered_output))
 
     # If no reads remain after filtering and trimming, create empty FASTQ file(s)

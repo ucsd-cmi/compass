@@ -36,11 +36,11 @@ process QIIME2_CLASSIFY_TAXONOMY {
     qiime tools export \\
         --input-path taxonomy.qza \\
         --output-path taxonomy
-    
+
     qiime tools export \\
         --input-path taxonomy.qzv \\
         --output-path taxonomy
-    
+
     cp taxonomy/taxonomy.tsv ./taxonomy.tsv
     """
 }

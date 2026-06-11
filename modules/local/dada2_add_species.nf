@@ -10,7 +10,7 @@ process DADA2_ADD_SPECIES {
     input:
     path(asv_taxonomy)
     tuple val(meta), path(classifier)
-    
+
     output:
     path("*${asv_taxonomy.baseName}.with_species.tsv"), emit: tsv
     path "versions.yml", emit: versions, topic: versions

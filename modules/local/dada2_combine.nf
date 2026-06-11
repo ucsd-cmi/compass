@@ -15,14 +15,14 @@ process DADA2_COMBINE {
     path("full_asv_table_with_sequences.tsv"), emit: dada2_asv_tsv_with_sequences
     path("asv_sequences.fasta"), emit: asv_fasta
     path "versions.yml", emit: versions, topic: versions
-    
+
     script:
     """
     #!/usr/bin/env Rscript
 
     suppressPackageStartupMessages(library(dada2))
     suppressPackageStartupMessages(library(cli))
-    
+
     asv_files <- sort(list.files(".", pattern = ".rds", full.names = TRUE))
     if(length(asv_files) == 1) {
         asv_table <- readRDS(asv_files[1])
@@ -37,12 +37,12 @@ process DADA2_COMBINE {
     df <- data.frame(sequence = rownames(df), df, check.names = FALSE)
     df\$asv_id <- hash_md5(df\$sequence)
     df <- df[,c(ncol(df),3:ncol(df)-1,1)]
-    
+
     df <- df[order(df\$asv_id),]
 
     write.table(df, file = "full_asv_table_with_sequences.tsv", sep = "\\t", row.names = FALSE, na = "")
     write.table(data.frame(s = sprintf(">%s\n%s", df\$asv_id, df\$sequence)), "asv_sequences.fasta", col.names = FALSE, row.names = FALSE, quote = FALSE, na = "")
-    
+
     df\$sequence <- NULL
     write.table(df, file = "full_asv_table.tsv", sep="\\t", row.names = FALSE, quote = FALSE, na = "")
 

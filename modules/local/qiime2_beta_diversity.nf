@@ -26,7 +26,7 @@ process QIIME2_BETA_DIVERSITY {
 
     for METRIC in "\${metric_list[@]}"
     do
-        if [ \"${beta_type}\" == \"phylogenetic\" ]; then 
+        if [ \"${beta_type}\" == \"phylogenetic\" ]; then
             qiime diversity beta-phylogenetic \\
                 --i-table ${feature_table} \\
                 --i-phylogeny ${tree} \\

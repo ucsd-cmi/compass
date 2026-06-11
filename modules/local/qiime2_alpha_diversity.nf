@@ -26,7 +26,7 @@ process QIIME2_ALPHA_DIVERSITY {
 
     for METRIC in "\${metric_list[@]}"
     do
-        if [ \"${alpha_type}\" == \"phylogenetic\" ]; then 
+        if [ \"${alpha_type}\" == \"phylogenetic\" ]; then
             qiime diversity alpha-phylogenetic \\
                 --i-table ${feature_table} \\
                 --i-phylogeny ${tree} \\

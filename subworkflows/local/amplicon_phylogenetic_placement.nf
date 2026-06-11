@@ -52,5 +52,4 @@ workflow AMPLICON_PHYLOGENETIC_PLACEMENT {
     tree                    = QIIME2_SEPP.out.tree
     versions                = ch_versions
     multiqc_output          = ch_multiqc_files
-
 }

@@ -72,7 +72,7 @@
 
 - [ShortRead](https://doi.org/doi:10.18129/B9.bioc.ShortRead)
 
-> Morgan M, Anders S, Lawrence M, Aboyoun P, Pagès H, Gentleman R (2009). “ShortRead: a Bioconductor package for input, quality assessment and exploration of high-throughput sequence data.” Bioinformatics, 25, 2607-2608. doi:10.1093/bioinformatics/btp450. http://dx.doi.org10.1093/bioinformatics/btp450. 
+> Morgan M, Anders S, Lawrence M, Aboyoun P, Pagès H, Gentleman R (2009). “ShortRead: a Bioconductor package for input, quality assessment and exploration of high-throughput sequence data.” Bioinformatics, 25, 2607-2608. doi:10.1093/bioinformatics/btp450. http://dx.doi.org10.1093/bioinformatics/btp450.
 
 - [SILVA](https://doi.org/10.1093/nar/gkaf1247)
 
