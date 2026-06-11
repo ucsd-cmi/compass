@@ -73,4 +73,5 @@ template:
     - vscode
     - adaptivecard
     - slackreport
+    - template_version
   is_nfcore: false

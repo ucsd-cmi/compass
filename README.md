@@ -2,11 +2,13 @@
 
 ## Introduction
 
-COMPASS is an analysis pipeline to generate taxonomic classification and profiling output from shotgun metagenomic data. Currently, the pipeline is set up to process short-read data from Illumina sequencing platforms, but furture development plans include long-read data and other sequencing platforms. Additionally, a separate pathway for 16S data will be included in a future version of the pipeline.
+COMPASS is an analysis pipeline to generate taxonomic classification and profiling output from metagenomic data. Currently, the pipeline is set up to process short-read data from Illumina sequencing platforms, but future development plans include long-read data and other sequencing platforms. The pipeline now includes separate modes for shotgun and amplicon data, with the amplicon pathway currently limited to 16S.
 
 ## Pipeline Summary
 
 COMPASS is intended to be highly modular, allowing users to use or skip steps as they desire. For example, a user can theoretically skip all tools beyond the startup FastQC step and the closing MultiQC report. However, we generally expect users to follow most or all steps of the pipeline, they're not required.
+
+### Shotgun Workflow
 
 ![](docs/images/pipeline_diagram.png)
 
@@ -17,7 +19,21 @@ The current toolset is fairly linear, but we anticipate adding alternative tools
 - Samtools for generation of host-read removal statistics
 - Cat/FASTQ as necessary for merging samples with multiple runs
 - Kraken2 and Bracken for taxonomic classification and profiling
+- KrakenTools for filtering Kraken2 results
 - taxpasta for the optional standardization of taxonomic profile output
+- MultiQC for report generation
+
+### Amplicon Workflow
+
+![](docs/images/pipeline_diagram_amplicon.png)
+
+The current toolset is below, with plans to add further options:
+- FastQC for read quality control
+- cutadapt for adapter trimming and primer removal
+- DADA2 for inference of Amplicon Sequence Variants
+- SEPP via QIIME2 for phylogenetic placement
+- DADA2 and QIIME2 for taxonomic classification
+- QIIME2 for optional taxa filtering and generation of feature tables
 - MultiQC for report generation
 
 ## Pipeline Usage
@@ -46,7 +62,7 @@ bracken,PlusPF,,/path/to/pluspf/
 kraken2,PlusPF,,/path/to/pluspf/
 ```
 
-Note that the `ref_db_params` column can be used to pass extra parameters into a specific tool (excluding bowtie2, which ignores any value in that field). For example:
+Note that the `ref_db_params` column can be used to pass extra parameters into a specific tool for the shotgun side of the pipeline (excluding bowtie2, which ignores any value in that field). For example:
 ```
 bracken,PlusPF,-r 150,/path/to/pluspf/
 ```
@@ -60,7 +76,7 @@ nextflow run ucsd-cmi/compass \
     --outdir </path/to/store/output>
 ```
 
-You may use other parameters with an optional `-params-file params.json` flag, or by adding them directly to the command, such as `--adapter_list /path/to/adapters.fna`.
+You may use other parameters with an optional `-params-file params.json` flag, or by adding them directly to the command, such as `--shotgun_adapter_list /path/to/adapters.fna`.
 
 If you're interested in using a hosted version of COMPASS to perform sample processing and analysis, or have any questions or comments about the pipeline, please contact us at [CMIInfo@ucsd.edu](mailto:cmiinfo@ucsd.edu).
 

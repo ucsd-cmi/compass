@@ -8,7 +8,7 @@ include { SAMTOOLS_FASTQ } from '../../modules/nf-core/samtools/fastq/main'
 include { SAMTOOLS_INDEX } from '../../modules/nf-core/samtools/index/main'
 include { SAMTOOLS_STATS } from '../../modules/nf-core/samtools/stats/main'
 
-workflow HOSTREMOVAL {
+workflow SHOTGUN_HOSTREMOVAL {
     take:
     reads
     ch_ref_databases

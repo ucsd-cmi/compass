@@ -5,10 +5,10 @@
 include { FASTP                    } from '../../modules/nf-core/fastp/main'
 include { FASTQC as FASTQC_TRIMMED } from '../../modules/nf-core/fastqc/main'
 
-workflow PREPROCESSING {
+workflow SHOTGUN_PREPROCESSING {
     take:
     reads
-    adapterList
+    shotgun_adapter_list
 
     main:
     ch_versions = channel.empty()
@@ -20,7 +20,7 @@ workflow PREPROCESSING {
 
     FASTP (
         reads,
-        adapterList,
+        shotgun_adapter_list,
         false,
         false,
         true

@@ -12,9 +12,13 @@
                 "enum": [
                     "bowtie2",
                     "bracken",
-                    "kraken2"
+                    "dada2",
+                    "dada2_species",
+                    "kraken2",
+                    "qiime2",
+                    "sepp"
                 ],
-                "errorMessage": "Invalid tool name. Please see documentation for all supported tools. Currently these tools are included: bowtie2, bracken, kraken2.",
+                "errorMessage": "Invalid tool name. Please see documentation for all supported tools. Currently these tools are included: bowtie2, bracken, dada2, dada2_species, kraken2, qiime2, and sepp.",
                 "meta": ["tool"]
             },
             "ref_db_name": {
