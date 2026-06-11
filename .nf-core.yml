@@ -22,6 +22,7 @@ lint:
     - docs/README.md
     - .prettierignore
     - assets/email_template.html
+    - .github/workflows/template-version-comment.yml
   nextflow_config:
     - manifest.name
     - manifest.homePage
