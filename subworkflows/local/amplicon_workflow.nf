@@ -64,7 +64,7 @@ workflow AMPLICON_WORKFLOW {
 
     /*
         SUBWORKFLOW: Taxonomic classification
-    */    
+    */
     AMPLICON_TAXONOMIC_CLASSIFICATION (
         ch_asv_fasta,
         ch_ref_databases
