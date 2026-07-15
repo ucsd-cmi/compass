@@ -128,6 +128,31 @@ Description: Determines whether to use fastp's --cut_tail parameter for shotgun 
 Help Text: --cut_tail performs sliding window trimming from the 3' (tail) end of a read, removing low-quality bases based on mean quality.
 ```
 
+- shotgun_preprocessing_fastp_cut_right
+```
+Type: Boolean
+Default: false
+Description: Determines whether to use fastp's --cut_right parameter for shotgun metagenomic samples
+Help Text: Moves a sliding window from front to tail and, if it meets a window below the mean quality threshold, drops the bases in the window and the right part and stops. Use the following two parameters to control the window size and mean quality threshold. Similar to Trimmomatic's SLIDINGWINDOW parameter.based on mean quality.
+```
+
+- shotgun_preprocessing_fastp_cut_right_window_size
+```
+Type: integer
+Default: 4
+Description: Number of bases to use in the window for the cut_right method
+Help Text: Number of bases to use in the window for the cut_right method
+```
+
+- shotgun_preprocessing_fastp_cut_right_mean_quality
+```
+Type: integer
+Default: 20
+Description: Mean quality threshold for the cut_right method.
+Help Text: Mean quality threshold for the cut_right method.
+```
+
+
 ### Shotgun Host Removal
 
 - shotgun_do_host_removal
