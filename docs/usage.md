@@ -112,7 +112,7 @@ Description: Minimum length of reads to preserve and process for shotgun metagen
 Help Text: Changing the minimum read length will impact both profiling speed and accuracy.
 ```
 
-- shotgun_preprocessing_average_quality
+- shotgun_preprocessing_fastp_average_quality
 ```
 Type: integer
 Default: 0
