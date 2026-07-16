@@ -84,6 +84,13 @@
                     "help_text": "Changing the minimum read length will impact both profiling speed and accuracy.",
                     "default": 15
                 },
+                "shotgun_preprocessing_fastp_average_quality": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "If a read's average quality score falls below this threshold, it (or its pair) is discarded.",
+                    "help_text": "This utilizes fastp's --average_qual parameter.",
+                    "default": 0
+                },
                 "shotgun_preprocessing_fastp_qualified_quality_phred": {
                     "type": "integer",
                     "fa_icon": "fas fa-ruler-horizontal",
@@ -114,10 +121,59 @@
                 },
                 "shotgun_preprocessing_fastp_cut_right_mean_quality": {
                     "type": "integer",
-                    "fa_icon": "fas fa-ruler_horizontal",
+                    "fa_icon": "fas fa-ruler-horizontal",
                     "description": "Mean quality threshold for the cut_right method.",
                     "help_text": "Mean quality threshold for the cut_right method.",
                     "default": 20
+                },
+                "shotgun_preprocessing_fastp_correction": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Determines whether fastp's --correction function is active.",
+                    "help_text": "If --correction is active, a read must meet all three of the overlap_len_require, overlap_diff_limit, and overlap_diff_percent_limit parameters to be corrected.",
+                    "default": false
+                },
+                "shotgun_preprocessing_fastp_overlap_len_require": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "The minimum length to detect overlapped region of paired-end reads.",
+                    "help_text": "The minimum length to detect overlapped region of paired-end reads.",
+                    "default": 30
+                },
+                "shotgun_preprocessing_fastp_overlap_diff_limit": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "The maximum number of mismatched bases to detect overlapped region of paired-end reads.",
+                    "help_text": "The maximum number of mismatched bases to detect overlapped region of paired-end reads.",
+                    "default": 5
+                },
+                "shotgun_preprocessing_fastp_overlap_diff_percent_limit": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "The maximum percentage of mismatched bases to detect overlapped region of paired-end reads.",
+                    "help_text": "The maximum percentage of mismatched bases to detect overlapped region of paired-end reads.",
+                    "default": 20
+                },
+                "shotgun_preprocessing_fastp_low_complexity_filter": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Determines whether fastp's low complexity filter function is active.",
+                    "help_text": "If active, the filter removes repetitive DNA sequences based on the threshold defined by complexity_threshold.",
+                    "default": false
+                },
+                "shotgun_preprocessing_fastp_complexity_threshold": {
+                    "type": "integer",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "description": "The threshold for fastp's low complexity filter.",
+                    "help_text": "Please see fastp's online documentation to review how complexity is calculated.",
+                    "default": 30
+                },
+                "shotgun_preprocessing_fastp_overrepresentation_analysis": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-toggle-off",
+                    "description": "Determines whether fastp's overrepresentation analysis function is active.",
+                    "help_text": "Provides counts and figures for overrepresented sequences, but does not perform any filtering.",
+                    "default": false
                 }
             }
         },

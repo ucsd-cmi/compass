@@ -112,6 +112,14 @@ Description: Minimum length of reads to preserve and process for shotgun metagen
 Help Text: Changing the minimum read length will impact both profiling speed and accuracy.
 ```
 
+- shotgun_preprocessing_average_quality
+```
+Type: integer
+Default: 0
+Description: If a read's average quality score falls below this threshold, it (or its pair) is discarded.
+Help Text: This utilizes fastp's --average_qual parameter.
+```
+
 - shotgun_preprocessing_fastp_qualified_quality_phred
 ```
 Type: integer
@@ -152,6 +160,61 @@ Description: Mean quality threshold for the cut_right method.
 Help Text: Mean quality threshold for the cut_right method.
 ```
 
+- shotgun_preprocessing_fastp_correction
+```
+Type: Boolean
+Default: false
+Description: Determines whether fastp's --correction function is active.
+Help Text: If --correction is active, a read must meet all three of the overlap_len_require, overlap_diff_limit, and overlap_diff_percent_limit parameters to be corrected.
+```
+
+- shotgun_preprocessing_fastp_overlap_len_require
+```
+Type: integer
+Default: 30
+Description: The minimum length to detect overlapped region of paired-end reads.
+Help Text: The minimum length to detect overlapped region of paired-end reads.
+```
+
+- shotgun_preprocessing_fastp_overlap_diff_limit
+```
+Type: integer
+Default: 5
+Description: The maximum number of mismatched bases to detect overlapped region of paired-end reads.
+Help Text: The maximum number of mismatched bases to detect overlapped region of paired-end reads.
+```
+
+- shotgun_preprocessing_fastp_overlap_diff_percent_limit
+```
+Type: integer
+Default: 20
+Description: The maximum percentage of mismatched bases to detect overlapped region of paired-end reads.
+Help Text: The maximum percentage of mismatched bases to detect overlapped region of paired-end reads.
+```
+
+- shotgun_preprocessing_fastp_low_complexity_filter
+```
+Type: boolean
+Default: false
+Description: Determines whether fastp's low complexity filter function is active.
+Help Text: If active, the filter removes repetitive DNA sequences based on the threshold defined by complexity_threshold.
+```
+
+- shotgun_preprocessing_fastp_complexity_threshold
+```
+Type: integer
+Default: 30
+Description: The threshold for fastp's low complexity filter.
+Help Text: Please see fastp's online documentation to review how complexity is calculated.
+```
+
+- shotgun_preprocessing_fastp_overrepresentation_analysis
+```
+Type: Boolean
+Default: false
+Description: Determines whether fastp's overrepresentation analysis function is active.
+Help Text: Provides counts and figures for overrepresented sequences, but does not perform any filtering.
+```
 
 ### Shotgun Host Removal
 
